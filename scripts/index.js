@@ -1,4 +1,4 @@
-const previousState = [];
+let previousState = {};
 
 (async () => {
   while(true) {
