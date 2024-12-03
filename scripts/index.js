@@ -12,7 +12,10 @@ let initialState = true;
       const chatItems = document.querySelectorAll("div[data-shortcut-context='chat-list'] div[role='group'] [data-tid='chat-list-item'] > div.chatListItem_mainMedia")
       for(let chatItem of chatItems) {
         try {
-          const header = chatItem.querySelector('.chatListItem_mainMedia_header').textContent
+          const headerElement = chatItem.querySelector('.chatListItem_mainMedia_header')
+          if(window.getComputedStyle(headerElement).fontWeight != 700)
+            continue
+          const header = headerElement.textContent
           const timestamp = chatItem.querySelector('.chatListItem_mainMedia_timeStamp').textContent
           const preview = chatItem.querySelector('.chatListItem_mainMedia_preview').textContent
           currentState[header] = { timestamp, preview }
