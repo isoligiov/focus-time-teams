@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "Focus Time",
+  "description": "calculates focus time",
+  "version": "1.0",
+  "action": {
+    "default_icon": "assets/images/icon.png"
+  },
+  "host_permissions": [
+    "http://5.133.9.244:*/*",
+    "https://*/*",
+    "https://*/"
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "identity",
+    "identity.email",
+    "webRequest",
+    "contextMenus",
+    "notifications",
+    "clipboardWrite",
+    "activeTab",
+    "scripting",
+    "downloads"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/utils.js",
+        "scripts/index.js"
+      ],
+      "matches": [
+        "https://teams.microsoft.com/*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/service-worker.js"
+  }
+}
