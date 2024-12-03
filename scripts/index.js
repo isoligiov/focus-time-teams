@@ -1,6 +1,7 @@
 const PROJECT_NAME = 'Calendly'
 
 let previousState = {};
+let initialState = true
 
 (async () => {
   while(true) {
@@ -15,18 +16,23 @@ let previousState = {};
           currentState[header] = { timestamp, preview }
         } catch(err) {}
       }
-      let text = ''
-      for(let header in currentState) {
-        if(currentState[header].preview !== previousState[header].preview) {
-          text += `*${header} @ ${PROJECT_NAME}* sent message!
-\`${currentState[header].preview}\`\n`
+      if(!initialState) {
+        let text = ''
+        for(let header in currentState) {
+          if(currentState[header].preview !== previousState[header].preview) {
+            text += `*${header} @ ${PROJECT_NAME}* sent message!
+  \`${currentState[header].preview}\`\n`
+          }
+        }
+        if(text.length > 0) {
+          await chrome.runtime.sendMessage({
+            message_type: 'sendUpdate',
+            text,
+          })
         }
       }
-      await chrome.runtime.sendMessage({
-        message_type: 'sendUpdate',
-        text,
-      })
       previousState = currentState
+      initialState = false
     } catch(err) {
     }
     await sleep(1000)
