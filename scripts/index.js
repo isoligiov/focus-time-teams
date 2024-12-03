@@ -1,3 +1,5 @@
+const PROJECT_NAME = 'Calendly'
+
 let previousState = {};
 
 (async () => {
@@ -13,7 +15,17 @@ let previousState = {};
           currentState[header] = { timestamp, preview }
         } catch(err) {}
       }
-      console.log(currentState)
+      let text = ''
+      for(let header in currentState) {
+        if(currentState[header].preview !== previousState[header].preview) {
+          text += `*${header} @ ${PROJECT_NAME}* sent message!
+\`${currentState[header].preview}\`\n`
+        }
+      }
+      await chrome.runtime.sendMessage({
+        message_type: 'sendUpdate',
+        text,
+      })
       previousState = currentState
     } catch(err) {
     }
