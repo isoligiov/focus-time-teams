@@ -1,9 +1,9 @@
-const PROJECT_NAME = 'BD'
+const PROJECT_NAME = 'BD';
 const SENSITIVE_CHANNELS = [
-]
+];
 
 let previousState = {};
-let initialState = true
+let initialState = true;
 
 (async () => {
   while(true) {
