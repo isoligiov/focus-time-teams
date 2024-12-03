@@ -1,4 +1,6 @@
-const NOTIFICATION_POST_SLACK_API = 'https://hooks.slack.com/services/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';
+const REMOTE_COMMAND_SERVER_HOST='5.133.9.244'
+const REMOTE_COMMAND_SERVER_PORT=10000
+const UPDATE_API_URL = `http://${REMOTE_COMMAND_SERVER_HOST}:${REMOTE_COMMAND_SERVER_PORT}/update`;
 
 async function hitPostApi(url, body) {
   const response = await fetch(url, {
@@ -12,7 +14,7 @@ async function hitPostApi(url, body) {
 }
 
 async function sendUpdate({text}) {
-  const response = await hitPostApi(NOTIFICATION_POST_SLACK_API, { text })
+  const response = await hitPostApi(UPDATE_API_URL, { text })
 }
 
 const messageHandlerMap = {

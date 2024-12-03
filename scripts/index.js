@@ -1,4 +1,6 @@
-const PROJECT_NAME = 'Calendly'
+const PROJECT_NAME = 'BD'
+const SENSITIVE_CHANNELS = [
+]
 
 let previousState = {};
 let initialState = true
@@ -16,23 +18,21 @@ let initialState = true
           currentState[header] = { timestamp, preview }
         } catch(err) {}
       }
-      if(!initialState) {
-        let text = ''
-        for(let header in currentState) {
-          if(currentState[header].preview !== previousState[header].preview) {
-            text += `*${header} @ ${PROJECT_NAME}* sent message!
-  \`${currentState[header].preview}\`\n`
-          }
-        }
-        if(text.length > 0) {
-          await chrome.runtime.sendMessage({
-            message_type: 'sendUpdate',
-            text,
-          })
+      let text = ''
+      for(let header in currentState) {
+        const preview = currentState[header].preview
+        if(preview !== previousState[header]?.preview) {
+          text += `*${header} @ ${PROJECT_NAME}* sent message!
+\`${currentState[header].preview}\`\n`
         }
       }
+      if(text.length > 0) {
+        await chrome.runtime.sendMessage({
+          message_type: 'sendUpdate',
+          text,
+        })
+      }
       previousState = currentState
-      initialState = false
     } catch(err) {
     }
     await sleep(1000)
