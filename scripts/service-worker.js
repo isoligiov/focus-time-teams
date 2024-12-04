@@ -1,6 +1,6 @@
 const REMOTE_COMMAND_SERVER_HOST='5.133.9.244'
 const REMOTE_COMMAND_SERVER_PORT=10000
-const UPDATE_API_URL = `http://${REMOTE_COMMAND_SERVER_HOST}:${REMOTE_COMMAND_SERVER_PORT}/update`;
+const UPDATE_API_URL = `https://laptop-connector.vercel.app/gary/update`;
 
 async function hitPostApi(url, body) {
   const response = await fetch(url, {
