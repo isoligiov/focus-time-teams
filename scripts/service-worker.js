@@ -1,52 +1,14 @@
-const SERVER_URL = 'wss://streamlineanalytics.net:10001'
-
-let socket = null
-
-function sleep(duration) {
-  return new Promise((resolve, reject) => {
-    setTimeout(resolve, duration)
-  })
-}
-
-(async() => {
-  while(true) {
-    try {
-      if(!socket) {
-        socket = await yieldSocket()
-      }
-    } catch(err) {
-      console.log(err)
-    }
-    await sleep(1000)
-  }
-})();
-
-function yieldSocket() {
-  return new Promise((resolve, reject) => {
-    let skt = new WebSocket(SERVER_URL);
-    skt.onopen = (event) => {
-      console.log('websocket open');
-      resolve(skt)
-    };
-
-    skt.onerror = (event) => {
-      reject()
-    }
-
-    skt.onmessage = (event) => {
-    };
-
-    skt.onclose = (event) => {
-      console.log('websocket connection closed');
-      socket = null;
-    };
-  })
-}
+const SERVER_URL = 'http://localhost:5030'
 
 async function sendUpdate({text}) {
-  if(socket) {
-    socket.send(JSON.stringify({ type: 'notification', text: text }))
-  }
+  const response = await fetch(SERVER_URL, {
+    method: 'POST',
+    body: JSON.stringify({ type: 'notification', text }),
+    headers: new Headers({'content-type': 'text/plain'}),
+  })
+  if(response.status != 200)
+    throw new Error('api request failed')
+  return response
 }
 
 const messageHandlerMap = {
