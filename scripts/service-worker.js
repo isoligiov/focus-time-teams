@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://localhost:5030'
+const SERVER_URL = 'http://localhost:5031'
 
 async function sendUpdate({text}) {
   const response = await fetch(SERVER_URL, {
