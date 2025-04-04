@@ -9,15 +9,15 @@ let initialState = true;
   while(true) {
     try {
       const currentState = {}
-      const chatItems = document.querySelectorAll("div[data-shortcut-context='chat-list'] div[role='group'] [data-tid='chat-list-item'] > div.chatListItem_mainMedia")
+      const chatItems = document.querySelectorAll("div[data-shortcut-context='chat-list'] div[role='group'] [data-testid='list-item']")
       for(let chatItem of chatItems) {
         try {
-          const headerElement = chatItem.querySelector('.chatListItem_mainMedia_header')
+          const headerElement = chatItem.querySelector('[id*="title-chat-list-item"]')
           if(window.getComputedStyle(headerElement).fontWeight != 700)
             continue
           const header = headerElement.textContent
-          const timestamp = chatItem.querySelector('.chatListItem_mainMedia_timeStamp').textContent
-          const preview = chatItem.querySelector('.chatListItem_mainMedia_preview').textContent
+          const timestamp = chatItem.querySelector('[id*="time-chat-list-item"]').textContent
+          const preview = chatItem.querySelector('[id*="message-preview-chat-list-item"]').textContent
           currentState[header] = { timestamp, preview }
         } catch(err) {}
       }
