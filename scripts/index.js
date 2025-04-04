@@ -25,8 +25,9 @@ let initialState = true;
       for(let header in currentState) {
         const preview = currentState[header].preview
         if(preview !== previousState[header]?.preview) {
+          const previewText = (preview || "").replace('`', '"').split(/[\r\n]/g).filter(line => line.length > 0).map(line => `\`${line}\``).join("\n")
           text += `*${header} @ ${PROJECT_NAME}* sent message!
-\`${currentState[header].preview}\`\n`
+${previewText}`
         }
       }
       if(text.length > 0) {
